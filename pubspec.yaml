@@ -1,0 +1,29 @@
+name: zhu_yin_jing_zhou
+description: 这是一个用来更加方便和简洁地展现佛经、佛咒的APP
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+# 依赖
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  scoped_model: ^1.0.1
+  json_annotation: ^3.0.0
+  sqflite: ^1.1.6+3
+  path_provider: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+  uses-material-design: true
+
+  # 添加图片等媒体资源
