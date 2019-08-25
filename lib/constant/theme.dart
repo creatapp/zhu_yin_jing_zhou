@@ -14,7 +14,7 @@ class MyTheme {
   // 主题种类，在enum和BaseTheme子类体现
   ThemeCategory _themeCategory = ThemeCategory.light;
   // 实际被APP采用的主题
-  BaseTheme theme = LightTheme();
+  BaseTheme t = LightTheme();
 
   // BaseTheme子类都应该在这里被持有，为了不
   BaseTheme _lightTheme = LightTheme();
@@ -34,7 +34,7 @@ class MyTheme {
   }
 
   void changeColor(BaseTheme newTheme) {
-    theme.primaryColor = newTheme.primaryColor;
+    t.primaryColor = newTheme.primaryColor;
   }
 }
 
@@ -42,12 +42,15 @@ class MyTheme {
 ///
 class BaseTheme {
   Color primaryColor;
+  Color mainBackground;
 }
 
 class LightTheme extends BaseTheme{
   Color primaryColor = Colors.white;
+  Color mainBackground = Colors.white;
 }
 
 class DarkTheme extends BaseTheme{
   Color primaryColor = Colors.black;
+  Color mainBackground = Colors.black;
 }

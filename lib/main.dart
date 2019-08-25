@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'constant/theme.dart';
+import 'page/my_home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,29 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        backgroundColor: Colors.white
       ),
       home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
-      body: Center(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
