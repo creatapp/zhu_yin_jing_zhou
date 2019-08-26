@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../component/home_title.dart';
-import '../component/home_text_menu.dart';
+import '../component/home_search.dart';
 import '../component/home_library.dart';
 import '../constant/theme.dart';
 
@@ -19,19 +19,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          HomeTitle(),
-          Container(padding: EdgeInsets.only(left: 20, bottom: 20), color: Colors.blue,),
-          HomeTextMenu(),
-          Container(padding: EdgeInsets.only(bottom: 20),),
-          HomeLibrary()
-        ],
-      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          children: <Widget>[
+            HomeTitle(),
+            Container(padding: EdgeInsets.only(bottom: 40),),
+            HomeSearch(),
+            Container(padding: EdgeInsets.only(bottom: 40),),
+            HomeLibrary()
+          ],
+        ),
+      )
     );
   }
 }

@@ -9,8 +9,7 @@ class HomeTitleState extends State<HomeTitle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Container(padding: EdgeInsets.only(bottom: 20),),
@@ -24,7 +23,7 @@ class HomeTitleState extends State<HomeTitle> {
           Container(padding: EdgeInsets.only(bottom: 10),),
           Row(
             children: <Widget>[
-              Text('佛法僧心等，诸佛无心', style: TextStyle(color: Colors.black87, fontSize: 15),)
+              Text('若见诸相非相，即见如来', style: TextStyle(color: Colors.black87, fontSize: 15),)
             ],
           )
         ],
