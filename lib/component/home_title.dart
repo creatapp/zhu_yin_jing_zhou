@@ -23,7 +23,7 @@ class HomeTitleState extends State<HomeTitle> {
           Container(padding: EdgeInsets.only(bottom: 10),),
           Row(
             children: <Widget>[
-              Text('若见诸相非相，即见如来', style: TextStyle(color: Colors.black87, fontSize: 15),)
+              Text('若见诸相非相，即见如来。   --《金刚经》', style: TextStyle(color: Colors.black87, fontSize: 15),)
             ],
           )
         ],

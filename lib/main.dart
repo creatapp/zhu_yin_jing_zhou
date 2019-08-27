@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'constant/theme.dart';
 import 'page/my_home_page.dart';
 
-void main() => runApp(MyApp());
+void main() {
+//  debugPaintLayerBordersEnabled = true;
+//  debugPaintSizeEnabled = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   final MyTheme theme = MyTheme.getInstance();
