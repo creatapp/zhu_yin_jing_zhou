@@ -9,7 +9,8 @@ class HomeTitleState extends State<HomeTitle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      color: Colors.transparent,
       child: Column(
         children: <Widget>[
           Container(padding: EdgeInsets.only(bottom: 20),),

@@ -57,41 +57,51 @@ class HomeSearchState extends State<HomeSearch> with SingleTickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(0, 0, 0, 0.05),
-          borderRadius: BorderRadius.circular(24.0),
-        ),
-        height: 40.0,
-        child: Theme(
-          data: ThemeData(
-            primaryColor: darkText.withOpacity(darkText.opacity * 0.5),
-          ),
-          child: TextField(
-            controller: _searchTextController,
-            focusNode: _searchFocusNode,
-            decoration: InputDecoration(
-                hintText: "搜索",
-                hintStyle: TextStyle(
-                    fontSize: 16.0,
-                    color: darkText.withOpacity(darkText.opacity * 0.5)
-                ),
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: _searchFocusNode.hasFocus
-                    ? IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      _searchFocusNode.unfocus();
-                      _searchTextController.clear();
-                    })
-                    : null,
-                border: InputBorder.none),
-            style: TextStyle(
-              fontSize: 16.0,
-              color: darkText.withOpacity(darkText.opacity),
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      height: 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('导航', style: TextStyle(color: Colors.black,), overflow: TextOverflow.fade, softWrap: false,),
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.08),
+              borderRadius: BorderRadius.circular(24.0),
             ),
-          ),
-        ),
+            height: 35.0,
+            width: MediaQuery.of(context).size.width - 250,
+            child: Theme(
+              data: ThemeData(
+                primaryColor: darkText.withOpacity(darkText.opacity * 0.5),
+              ),
+              child: TextField(
+                controller: _searchTextController,
+                focusNode: _searchFocusNode,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(top: 5, left: 0),
+                    hintText: "搜索经咒、出处等",
+                    hintStyle: TextStyle(
+                        fontSize: 16.0,
+                        color: darkText.withOpacity(darkText.opacity * 0.5)
+                    ),
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: _searchFocusNode.hasFocus
+                        ? IconButton(
+                        icon: Icon(Icons.cancel),
+                        onPressed: () {
+                          _searchFocusNode.unfocus();
+                          _searchTextController.clear();
+                        })
+                        : null,
+                    border: InputBorder.none),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: darkText.withOpacity(darkText.opacity),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
