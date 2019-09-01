@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class HomeTitle extends StatefulWidget {
+class HomeTitle extends StatefulWidget implements PreferredSizeWidget{
   @override
   HomeTitleState createState() => HomeTitleState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(90);
 }
 
 class HomeTitleState extends State<HomeTitle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5),
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
@@ -26,7 +28,8 @@ class HomeTitleState extends State<HomeTitle> {
             children: <Widget>[
               Text('若见诸相非相，即见如来。   --《金刚经》', style: TextStyle(color: Colors.black87, fontSize: 15),)
             ],
-          )
+          ),
+          Container(padding: EdgeInsets.only(bottom: 20),)
         ],
       ),
     );
