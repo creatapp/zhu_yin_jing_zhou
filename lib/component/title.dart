@@ -13,6 +13,7 @@ class HomeTitleState extends State<HomeTitle> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         children: <Widget>[
           Container(padding: EdgeInsets.only(bottom: 20),),

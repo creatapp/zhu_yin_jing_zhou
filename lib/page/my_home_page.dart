@@ -17,17 +17,33 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
   final MyTheme myTheme = MyTheme.getInstance();
   TabController _tabController;
+  final ScrollController _scrollController = ScrollController(initialScrollOffset: 0, keepScrollOffset: true);
+  bool _isDisplayNavTool = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 3);
+
+    _scrollController.addListener((){
+      if (_scrollController.offset > 100 && !_isDisplayNavTool) {
+        setState(() {
+          _isDisplayNavTool = true;
+        });
+      } else if (_scrollController.offset < 100 && _isDisplayNavTool){
+        setState(() {
+          _isDisplayNavTool = false;
+        });
+      }
+//      debugPrint(_scrollController.offset.toString());
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     _tabController.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -38,23 +54,20 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 25, right: 25),
-                child: LibraryList(),
-              ),
-              BottomFloatingNavigation()
+              LibraryList(_scrollController),
+              _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
             ],
           ),
           Stack(
             children: <Widget>[
-              LibraryList(),
-              BottomFloatingNavigation()
+              LibraryList(_scrollController),
+              BottomFloatingNavigation(_scrollController)
             ],
           ),
           Stack(
             children: <Widget>[
-              LibraryList(),
-              BottomFloatingNavigation()
+              LibraryList(_scrollController),
+              BottomFloatingNavigation(_scrollController)
             ],
           ),
         ],

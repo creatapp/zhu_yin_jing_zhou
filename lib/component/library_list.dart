@@ -1,17 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:zhu_yin_jing_zhou/component/title.dart';
 
+import 'package:zhu_yin_jing_zhou/component/title.dart';
 import 'package:zhu_yin_jing_zhou/model/book_item.dart';
 
 class LibraryList extends StatefulWidget {
   @override
-  LibraryListState createState() => LibraryListState();
+  LibraryListState createState() => LibraryListState(_scrollController);
+
+  final ScrollController _scrollController;
+
+  LibraryList(this._scrollController);
 }
 
 class LibraryListState extends State<LibraryList> {
   List<Object> _bookItemList = [];
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController;
+
+  LibraryListState(this._scrollController);
 
   @override
   void initState() {
@@ -29,7 +35,6 @@ class LibraryListState extends State<LibraryList> {
   @override
   void dispose() {
     super.dispose();
-    _scrollController.dispose();
   }
 
   Future<void> _retrieveData() async {
@@ -53,53 +58,55 @@ class LibraryListState extends State<LibraryList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _retrieveData,
-      child: ListView.separated(
-        itemCount: _bookItemList.length,
-        itemBuilder: (context, index) {
+      child: Scrollbar(
+        child: ListView.separated(
+          itemCount: _bookItemList.length,
+          itemBuilder: (context, index) {
 
-          if (index == 0) {
-            return HomeTitle();
-          }
+            if (index == 0) {
+              return HomeTitle();
+            }
 
-          if (index >= _bookItemList.length - 1) {
-            _retrieveData();
+            if (index >= _bookItemList.length - 1) {
+              _retrieveData();
 
-            return Container(
-              padding: EdgeInsets.all(16),
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(strokeWidth: 2,),
-              ),
-            );
-          }
-
-          if (index % 4 == 1) {
-            return Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(Icons.remove_circle_outline, color: Colors.deepOrangeAccent,),
-                      Container(padding: EdgeInsets.only(left: 10),),
-                      Text('导航文字', style: TextStyle(fontSize: 22),),
-                    ],
-                  )
+              return Container(
+                padding: EdgeInsets.all(16),
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2,),
                 ),
-                _getBookLibrary(_bookItemList[index]),
-              ],
-            );
-          }
+              );
+            }
 
-          return _getBookLibrary(_bookItemList[index]);
-        },
+            if (index % 4 == 1) {
+              return Column(
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.only(top: 20, left: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.remove_circle_outline, color: Colors.deepOrangeAccent,),
+                          Container(padding: EdgeInsets.only(left: 10),),
+                          Text('导航文字', style: TextStyle(fontSize: 22),),
+                        ],
+                      )
+                  ),
+                  _getBookLibrary(_bookItemList[index]),
+                ],
+              );
+            }
 
-        separatorBuilder: (context, index) => Divider(height: 10),
-        controller: _scrollController,
-      ),
+            return _getBookLibrary(_bookItemList[index]);
+          },
+
+          separatorBuilder: (context, index) => Divider(height: 10),
+          controller: _scrollController,
+        ),
+      )
     );
   }
 
@@ -109,108 +116,97 @@ class LibraryListState extends State<LibraryList> {
     return Column(
       children: <Widget>[
         Container(padding: EdgeInsets.only(top: 15),),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              color: randomColor,
-              elevation: 15.0, //设置阴影
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))), //设置圆角
-              child: Container(
-                height: 150,
-                width: 120,
-                padding: EdgeInsets.all(10),
-                child: Center(
-                  child: Text(bookItem.name,
-                    style: TextStyle(fontSize: 18, color: Colors.black),),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Card(
+                color: randomColor,
+                elevation: 15.0, //设置阴影
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))), //设置圆角
+                child: Container(
+                  height: 150,
+                  width: 120,
+                  padding: EdgeInsets.all(10),
+//                  child: Center(
+//                    child: Text(bookItem.name,
+//                      style: TextStyle(fontSize: 18, color: Colors.black),),
+//                  ),
                 ),
               ),
-            ),
-            Container(padding: EdgeInsets.only(left: 20),),
-            Container(
-              height: 150,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width - 198,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(bookItem.name, style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,),
-                      Container(padding: EdgeInsets.only(bottom: 8),),
-                      Text(bookItem.interpreter,
-                        style: TextStyle(color: Colors.black38),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,),
-                      Container(padding: EdgeInsets.only(bottom: 8),),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                            text: '详情',
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.deepOrangeAccent),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return SimpleDialog(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 25),
-                                        title: Text('经咒详情'),
-                                        backgroundColor: Colors.white
-                                            .withOpacity(0.8),
-                                        children: <Widget>[
-                                          Divider(height: 5,),
-                                          Container(padding: EdgeInsets.only(
-                                              bottom: 30),),
-                                          Container(
-                                            height: 100,
-                                            width: 500,
-                                            child: Card(
-                                              color: Colors.brown,
-                                            ),
-                                          ),
-                                          Text(bookItem.name, style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),),
-                                          Container(padding: EdgeInsets.only(
-                                              bottom: 20),),
-                                          Text(bookItem.intro),
-                                          Container(padding: EdgeInsets.only(
-                                              bottom: 50),),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .spaceBetween,
-                                            children: <Widget>[
-                                              RichText(
-                                                text: TextSpan(
-                                                    text: '取消',
-                                                    recognizer: TapGestureRecognizer()
-                                                      ..onTap = () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    style: TextStyle(
-                                                        color: Colors.blue,
-                                                        fontSize: 15)
-                                                ),
+              Container(padding: EdgeInsets.only(left: 20),),
+              Container(
+                height: 150,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width - 198,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(bookItem.name, style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,),
+                        Container(padding: EdgeInsets.only(bottom: 8),),
+                        Text(bookItem.interpreter,
+                          style: TextStyle(color: Colors.black38),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,),
+                        Container(padding: EdgeInsets.only(bottom: 8),),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(
+                              text: '详情',
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.deepOrangeAccent),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return SimpleDialog(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 25),
+                                          title: Text('经咒详情'),
+                                          backgroundColor: Colors.white
+                                              .withOpacity(0.8),
+                                          children: <Widget>[
+                                            Divider(height: 5,),
+                                            Container(padding: EdgeInsets.only(
+                                                bottom: 30),),
+                                            Container(
+                                              height: 100,
+                                              width: 500,
+                                              child: Card(
+                                                color: Colors.brown,
                                               ),
-                                              RichText(
+                                            ),
+                                            Text(bookItem.name, style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),),
+                                            Container(padding: EdgeInsets.only(
+                                                bottom: 20),),
+                                            Text(bookItem.intro),
+                                            Container(padding: EdgeInsets.only(
+                                                bottom: 50),),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: <Widget>[
+                                                RichText(
                                                   text: TextSpan(
-                                                      text: '确定',
+                                                      text: '取消',
                                                       recognizer: TapGestureRecognizer()
                                                         ..onTap = () {
                                                           Navigator.of(context)
@@ -219,43 +215,57 @@ class LibraryListState extends State<LibraryList> {
                                                       style: TextStyle(
                                                           color: Colors.blue,
                                                           fontSize: 15)
-                                                  )
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                bottom: 20),
-                                          )
-                                        ],
-                                      );
-                                    }
-                                );
-                              }
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(right: 10),
-                        child: OutlineButton(
-                          padding: EdgeInsets.all(0),
-                          child: Text('下载', style: TextStyle(fontSize: 15,
-                              color: Colors.deepOrangeAccent),),
-                          color: Colors.deepOrangeAccent,
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                  ),
+                                                ),
+                                                RichText(
+                                                    text: TextSpan(
+                                                        text: '确定',
+                                                        recognizer: TapGestureRecognizer()
+                                                          ..onTap = () {
+                                                            Navigator.of(context)
+                                                                .pop();
+                                                          },
+                                                        style: TextStyle(
+                                                            color: Colors.blue,
+                                                            fontSize: 15)
+                                                    )
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  bottom: 20),
+                                            )
+                                          ],
+                                        );
+                                      }
+                                  );
+                                }
                           ),
-                          onPressed: () {
-                            debugPrint('here');
-                          },
                         ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+                        Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: OutlineButton(
+                            padding: EdgeInsets.all(0),
+                            child: Text('下载', style: TextStyle(fontSize: 15,
+                                color: Colors.deepOrangeAccent),),
+                            color: Colors.deepOrangeAccent,
+                            textColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                            ),
+                            onPressed: () {
+                              debugPrint('here');
+                            },
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         Container(padding: EdgeInsets.only(top: 15),),
       ],

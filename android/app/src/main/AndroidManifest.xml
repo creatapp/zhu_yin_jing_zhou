@@ -8,8 +8,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="zhu_yin_jing_zhou"
-        android:icon="@mipmap/ic_launcher">
+        android:label="注音经咒"
+        android:icon="@mipmap/hehua">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
