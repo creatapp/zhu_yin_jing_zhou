@@ -22,7 +22,6 @@ class LibraryListState extends State<LibraryList> {
   @override
   void initState() {
     super.initState();
-    _bookItemList.add(null);
     _addBookItem(10);
 
     _scrollController.addListener((){
@@ -63,10 +62,6 @@ class LibraryListState extends State<LibraryList> {
           itemCount: _bookItemList.length,
           itemBuilder: (context, index) {
 
-            if (index == 0) {
-              return HomeTitle();
-            }
-
             if (index >= _bookItemList.length - 1) {
               _retrieveData();
 
@@ -81,7 +76,7 @@ class LibraryListState extends State<LibraryList> {
               );
             }
 
-            if (index % 4 == 1) {
+            if (index % 4 == 0) {
               return Column(
                 children: <Widget>[
                   Container(
@@ -91,7 +86,7 @@ class LibraryListState extends State<LibraryList> {
                         children: <Widget>[
                           Icon(Icons.remove_circle_outline, color: Colors.deepOrangeAccent,),
                           Container(padding: EdgeInsets.only(left: 10),),
-                          Text('导航文字', style: TextStyle(fontSize: 22),),
+                          Text('导航文字', style: TextStyle(fontSize: 18),),
                         ],
                       )
                   ),
@@ -127,8 +122,8 @@ class LibraryListState extends State<LibraryList> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15.0))), //设置圆角
                 child: Container(
-                  height: 150,
-                  width: 120,
+                  height: 120,
+                  width: 90,
                   padding: EdgeInsets.all(10),
 //                  child: Center(
 //                    child: Text(bookItem.name,
@@ -136,13 +131,13 @@ class LibraryListState extends State<LibraryList> {
 //                  ),
                 ),
               ),
-              Container(padding: EdgeInsets.only(left: 20),),
+              Container(padding: EdgeInsets.only(left: 30),),
               Container(
-                height: 150,
+                height: 120,
                 width: MediaQuery
                     .of(context)
                     .size
-                    .width - 198,
+                    .width - 178,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,12 +149,10 @@ class LibraryListState extends State<LibraryList> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,),
-                        Container(padding: EdgeInsets.only(bottom: 8),),
                         Text(bookItem.interpreter,
                           style: TextStyle(color: Colors.black38),
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 2,),
-                        Container(padding: EdgeInsets.only(bottom: 8),),
+                          maxLines: 1,),
                       ],
                     ),
                     Row(

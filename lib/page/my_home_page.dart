@@ -1,10 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:zhu_yin_jing_zhou/component/library_grid.dart';
 
 import '../component/search.dart';
 import '../component/library_list.dart';
+import '../component/library_grid.dart';
+import '../component/task.dart';
 import '../component/bottom_floating_navigation.dart';
+import '../component/title.dart';
 import '../constant/theme.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -54,20 +58,26 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         children: <Widget>[
           Stack(
             children: <Widget>[
-              LibraryList(_scrollController),
+              HomeTitle(),
+              Container(
+                padding: EdgeInsets.only(top: 100),
+                child: LibraryGrid(_scrollController),
+              ),
               _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
             ],
           ),
           Stack(
             children: <Widget>[
-              LibraryList(_scrollController),
-              BottomFloatingNavigation(_scrollController)
+              Container(
+                padding: EdgeInsets.only(top: 100),
+                child: LibraryList(_scrollController),
+              ),
+              _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
             ],
           ),
           Stack(
             children: <Widget>[
-              LibraryList(_scrollController),
-              BottomFloatingNavigation(_scrollController)
+              Task(),
             ],
           ),
         ],
