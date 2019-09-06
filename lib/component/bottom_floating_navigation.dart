@@ -25,7 +25,7 @@ class BottomFloatingNavigationState extends State<BottomFloatingNavigation> {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: Container(
             color: Colors.white.withOpacity(0.1),
             height: 50,

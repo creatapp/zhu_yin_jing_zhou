@@ -22,6 +22,7 @@ class LibraryListState extends State<LibraryList> {
   @override
   void initState() {
     super.initState();
+    _bookItemList.add(null);
     _addBookItem(10);
 
     _scrollController.addListener((){
@@ -37,7 +38,7 @@ class LibraryListState extends State<LibraryList> {
   }
 
   Future<void> _retrieveData() async {
-    Future.delayed(Duration(seconds: 2)).then((e) {
+    Future.delayed(Duration(milliseconds: 500)).then((e) {
       setState(() {
         //重新构建列表
         _addBookItem(3);
@@ -62,6 +63,10 @@ class LibraryListState extends State<LibraryList> {
           itemCount: _bookItemList.length,
           itemBuilder: (context, index) {
 
+            if (index == 0) {
+              return HomeTitle();
+            }
+
             if (index >= _bookItemList.length - 1) {
               _retrieveData();
 
@@ -76,7 +81,7 @@ class LibraryListState extends State<LibraryList> {
               );
             }
 
-            if (index % 4 == 0) {
+            if (index % 4 == 1) {
               return Column(
                 children: <Widget>[
                   Container(
@@ -106,7 +111,7 @@ class LibraryListState extends State<LibraryList> {
   }
 
   Widget _getBookLibrary(BookItem bookItem) {
-    var randomColor = Colors.deepOrange;
+    var randomColor = Colors.yellow;
 
     return Column(
       children: <Widget>[

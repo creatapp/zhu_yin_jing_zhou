@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'dart:ui';
+import 'package:flutter/gestures.dart';
 
 import '../model/book_item.dart';
 import 'title.dart';
@@ -17,6 +18,7 @@ class LibraryGridState extends State<LibraryGrid> {
   LibraryGridState(this._scrollController);
 
   final ScrollController _scrollController;
+  final rowCnt = 3;
   List<Object> _bookItemList = [];
 
   @override
@@ -55,46 +57,173 @@ class LibraryGridState extends State<LibraryGrid> {
     return RefreshIndicator(
         onRefresh: _retrieveData,
         child: Scrollbar(
-          child: GridView.builder(
+          child: ListView.builder(
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 25),
             itemCount: _bookItemList.length,
             itemBuilder: (context, index) {
-              return _getBookLibrary(_bookItemList[index]);
+              if (index == 0) return HomeTitle();
+              if (index % 4 == 1) return Container(
+                  padding: EdgeInsets.only(top: 20, left: 25, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(Icons.remove_circle_outline, color: Colors.deepOrangeAccent,),
+                      Container(padding: EdgeInsets.only(left: 10),),
+                      Text('导航文字', style: TextStyle(fontSize: 18),),
+                    ],
+                  )
+              );
+              return _getRow(List.filled(3, _bookItemList[index]));
             },
             controller: _scrollController,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 50,
-              crossAxisSpacing: 35,
-              childAspectRatio: 0.75,
-            ),
           ),
         )
     );
   }
 
-  Widget _getBookLibrary(BookItem bookItem) {
-    var randomColor = Colors.deepOrange;
-    return Container(
-      width: 90,
-      height: 350,
-      child: Column(
-        children: <Widget>[
-          Card(
-            color: randomColor,
-            elevation: 15.0, //设置阴影
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))), //设置圆角
-            child: Container(
-              height: 120,
-              width: 90,
-              padding: EdgeInsets.all(10),
+  Widget _getRow(List<BookItem> bookItems) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        _getGrid(bookItems[0]),
+        _getGrid(bookItems[1]),
+        _getGrid(bookItems[2]),
+      ],
+    );
+  }
+  
+  Widget _getGrid(BookItem bookItem) {
+    return GestureDetector(
+      child: Container(
+        width: 90,
+        height: 200,
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Card(
+                  color: Colors.yellow,
+                  elevation: 15.0, //设置阴影
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))), //设置圆角
+                  child: Container(
+                    height: 120,
+                    width: 90,
+                    padding: EdgeInsets.all(10),
+                  ),
+                ),
+                Positioned(
+                  bottom: 4,
+                  left: 4,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                              width: 82,
+                              height: 30,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(padding: EdgeInsets.only(right: 10),),
+                                  SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: CircularProgressIndicator(
+                                      value: 0.75,
+                                      backgroundColor: Colors.transparent,
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),
+                                    ),
+                                  ),
+                                  Container(padding: EdgeInsets.only(right: 5),),
+                                  Text('75%', style: TextStyle(color: Colors.deepOrange),),
+                                  Container(padding: EdgeInsets.only(right: 10),),
+                                  Text('早', style: TextStyle(color: Colors.deepOrange),)
+                                ],
+                              )
+                          )
+                      )
+                  ),
+                ),
+              ],
             ),
-          ),
-          Text('经文加长加长版名字很长，测试溢出，应该不会溢出')
-        ],
+            Center(
+              child: Text(
+                '经文加长加长版名字很长，测试溢出，应该不会溢出',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            )
+          ],
+        ),
       ),
+      onTap: (){showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 25),
+          title: Text('经咒详情'),
+          backgroundColor: Colors.white
+              .withOpacity(0.8),
+          children: <Widget>[
+            Divider(height: 5,),
+            Container(padding: EdgeInsets.only(
+                bottom: 30),),
+            Container(
+              height: 100,
+              width: 500,
+              child: Card(
+                color: Colors.brown,
+              ),
+            ),
+            Text(bookItem.name, style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold),),
+            Container(padding: EdgeInsets.only(
+                bottom: 20),),
+            Text(bookItem.intro),
+            Container(padding: EdgeInsets.only(
+                bottom: 50),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceBetween,
+              children: <Widget>[
+                RichText(
+                  text: TextSpan(
+                      text: '取消',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context)
+                              .pop();
+                        },
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 15)
+                  ),
+                ),
+                RichText(
+                    text: TextSpan(
+                        text: '确定',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context)
+                                .pop();
+                          },
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 15)
+                    )
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                  bottom: 20),
+            )
+          ],
+        )
+      );},
     );
   }
 }

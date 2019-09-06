@@ -58,9 +58,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         children: <Widget>[
           Stack(
             children: <Widget>[
-              HomeTitle(),
               Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 10),
                 child: LibraryGrid(_scrollController),
               ),
               _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           Stack(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 10),
                 child: LibraryList(_scrollController),
               ),
               _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
