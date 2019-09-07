@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'constant/theme.dart';
-import 'page/my_home_page.dart';
+import 'page/home.dart';
 
 void main() {
 //  debugPaintLayerBordersEnabled = true;

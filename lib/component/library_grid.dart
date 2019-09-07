@@ -49,7 +49,7 @@ class LibraryGridState extends State<LibraryGrid> {
     });
   }
 
-  _getRandomItem () => BookItem('巴拉巴拉经加长加长看溢出溢出', '巴拉巴拉法师名字很长很长', 1.0, '这是一段很长很长的介绍文， 可能已经提前排好版本了的', '', 0, BookItemEnum.downloadable);
+  _getRandomItem () => BookItem('0', '巴拉巴拉经加长加长看溢出溢出', '巴拉巴拉法师名字很长很长', 1.0, '这是一段很长很长的介绍文， 可能已经提前排好版本了的', '', 0, BookItemEnum.downloadable);
 
 
   @override

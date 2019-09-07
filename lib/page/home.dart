@@ -1,14 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:zhu_yin_jing_zhou/component/library_grid.dart';
 
-import '../component/search.dart';
-import '../component/library_list.dart';
-import '../component/library_grid.dart';
-import '../component/task.dart';
+import '../component/appbar_nav.dart';
+import 'cang_jing_ge.dart';
+import 'gong_ke.dart';
 import '../component/bottom_floating_navigation.dart';
-import '../component/title.dart';
 import '../constant/theme.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length:2);
 
     _scrollController.addListener((){
       if (_scrollController.offset > 100 && !_isDisplayNavTool) {
@@ -58,25 +54,16 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                child: LibraryGrid(_scrollController),
-              ),
-              _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
+              Gongke(),
             ],
           ),
           Stack(
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 10),
-                child: LibraryList(_scrollController),
+                child: CangJingGe(),
               ),
               _isDisplayNavTool ? BottomFloatingNavigation(_scrollController) : Text(''),
-            ],
-          ),
-          Stack(
-            children: <Widget>[
-              Task(),
             ],
           ),
         ],
@@ -90,13 +77,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               child: TabBar(
                 tabs: <Widget>[
                   Tab(
-                    text: '本地',
-                  ),
-                  Tab(
-                    text: '线上',
-                  ),
-                  Tab(
                     text: '功课',
+                  ),
+                  Tab(
+                    text: '藏经阁',
                   ),
                 ],
                 controller: _tabController,
@@ -110,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
               ),
             ),
-            HomeSearch()
+            AppbarNav()
           ],
         ),
         backgroundColor: Colors.white,

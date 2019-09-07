@@ -4,6 +4,7 @@ part 'book_item.g.dart';
 
 @JsonSerializable()
 class BookItem {
+  String id;
   String name;
   String intro;
   String interpreter;
@@ -12,7 +13,8 @@ class BookItem {
   double progress;
   BookItemEnum bookItemEnum;
 
-  BookItem(this.name
+  BookItem(this.id
+      , this.name
       , this.interpreter
       , this.version
       , this.intro
