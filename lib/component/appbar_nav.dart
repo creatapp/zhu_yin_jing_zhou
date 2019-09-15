@@ -6,11 +6,7 @@ class AppbarNav extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Icon(Icons.search, color: Colors.black45,),
-        Container(padding: EdgeInsets.only(left: 20),),
-        Icon(Icons.feedback, color: Colors.black45,),
-        Container(padding: EdgeInsets.only(left: 20),),
-        Icon(Icons.remove_red_eye, color: Colors.black45,),
+        Icon(Icons.more_vert, color: Colors.black45,),
       ],
     );
   }

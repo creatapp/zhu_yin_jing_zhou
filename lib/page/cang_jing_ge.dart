@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:expandable/expandable.dart';
+import 'package:zhu_yin_jing_zhou/component/expandable_card.dart';
 
 class CangJingGe extends StatefulWidget {
   @override
@@ -10,6 +10,6 @@ class CangJingGe extends StatefulWidget {
 class CangJingGeState extends State<CangJingGe> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('藏经阁'),);
+    return ExpandableCard();
   }
 }
