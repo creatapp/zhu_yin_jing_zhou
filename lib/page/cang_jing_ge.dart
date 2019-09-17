@@ -10,6 +10,8 @@ class CangJingGe extends StatefulWidget {
 class CangJingGeState extends State<CangJingGe> {
   @override
   Widget build(BuildContext context) {
-    return ExpandableCard();
+    return ListView(
+      children: List.filled(10, ExpandableCard()),
+    );
   }
 }

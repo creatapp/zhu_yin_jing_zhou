@@ -112,7 +112,6 @@ class LibraryListState extends State<LibraryList> {
   }
 
   Widget _getBookLibrary(BookItem bookItem) {
-    var randomColor = Colors.yellow;
 
     return Column(
       children: <Widget>[
