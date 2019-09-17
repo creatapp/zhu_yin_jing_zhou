@@ -7,14 +7,14 @@ import 'gong_ke.dart';
 import '../component/bottom_floating_navigation.dart';
 import '../constant/theme.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class Home extends StatefulWidget {
+  Home({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
+class _MyHomePageState extends State<Home> with SingleTickerProviderStateMixin{
   final MyTheme myTheme = MyTheme.getInstance();
   TabController _tabController;
   final ScrollController _scrollController = ScrollController(initialScrollOffset: 0, keepScrollOffset: true);

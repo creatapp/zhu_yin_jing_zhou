@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.white
       ),
-      home: MyHomePage(),
+      home: Home(),
       debugShowCheckedModeBanner: false,
     );
   }
